@@ -9,11 +9,6 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-      packages: write  # required for GHCR
-      id-token: write  # optional if using OIDC
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
