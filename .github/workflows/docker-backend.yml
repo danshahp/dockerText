@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Docker
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/myapp-backend:latest ./backend
+          docker build -t ghcr.io/${{ github.repository_owner }}/myapp-backend:latest .
 
       - name: Push Docker image to GHCR
         run: |
