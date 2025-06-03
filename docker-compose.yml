@@ -1,0 +1,47 @@
+services:
+  backend:
+    image: node:20
+    container_name: myapp-backend
+    working_dir: /app/backend
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend/build/web:/app/frontend # assuming Flutter web build is here
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=postgres
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_NAME=mydb
+    command: >
+      sh -c "npm install && node index.js"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: my_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
+
+
+watchtower:
+  image: containrrr/watchtower
+  container_name: watchtower
+  restart: unless-stopped
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  environment:
+    - WATCHTOWER_CLEANUP=true # Remove old images after updating
+    - WATCHTOWER_POLL_INTERVAL=30 # Check for updates every 30 seconds (adjust as needed)
