@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      darkTheme: ThemeData.dark(),
+      darkTheme: ThemeData.light(),
       title: 'Tanzanian BMS',
       theme: ThemeData(
         brightness: Brightness.dark,
